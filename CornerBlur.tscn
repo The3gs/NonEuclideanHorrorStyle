@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://CornerBlur.shader" type="Shader" id=1]
+
+[sub_resource type="CylinderMesh" id=1]
+top_radius = 0.2
+bottom_radius = 0.001
+rings = 20
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = ExtResource( 1 )
+
+[node name="Blur" type="MeshInstance"]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -1, 0.0462101, 2.38419e-07 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 3 )

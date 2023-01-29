@@ -1,0 +1,334 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://World.gd" type="Script" id=2]
+[ext_resource path="res://default_env.tres" type="Environment" id=4]
+[ext_resource path="res://CornerBlur.tscn" type="PackedScene" id=5]
+[ext_resource path="res://MiniMap.tscn" type="PackedScene" id=6]
+[ext_resource path="res://UniversalTile.tscn" type="PackedScene" id=7]
+
+[sub_resource type="BoxShape" id=1]
+extents = Vector3( 10, 0.11, 10 )
+
+[sub_resource type="QuadMesh" id=2]
+size = Vector2( 2, 2 )
+
+[sub_resource type="Shader" id=3]
+code = "shader_type spatial;
+render_mode unshaded;
+
+uniform sampler2D next_texture: hint_albedo;
+void fragment() {
+    ALBEDO = texture(next_texture, SCREEN_UV).rgb;
+   }
+
+"
+
+[sub_resource type="ViewportTexture" id=4]
+viewport_path = NodePath("SecondaryWorld")
+
+[sub_resource type="ShaderMaterial" id=5]
+resource_local_to_scene = true
+shader = SubResource( 3 )
+shader_param/next_texture = SubResource( 4 )
+
+[sub_resource type="ViewportTexture" id=6]
+viewport_path = NodePath("TernaryWorld")
+
+[sub_resource type="ShaderMaterial" id=7]
+resource_local_to_scene = true
+shader = SubResource( 3 )
+shader_param/next_texture = SubResource( 6 )
+
+[sub_resource type="Environment" id=8]
+ambient_light_color = Color( 1, 1, 1, 1 )
+ambient_light_energy = 0.1
+
+[node name="Spatial" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.26482, 0 )
+
+[node name="FloorCollision" type="StaticBody" parent="."]
+
+[node name="CollisionShape" type="CollisionShape" parent="FloorCollision"]
+shape = SubResource( 1 )
+
+[node name="PrimaryWorld" type="Spatial" parent="."]
+
+[node name="NNW" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -2 )
+
+[node name="NN" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0 )
+
+[node name="NNE" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2 )
+
+[node name="NWW" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -4 )
+
+[node name="NW" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2 )
+
+[node name="N" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0 )
+
+[node name="NE" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2 )
+
+[node name="NEE" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4 )
+
+[node name="WW" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4 )
+
+[node name="W" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2 )
+
+[node name="C" parent="PrimaryWorld" instance=ExtResource( 7 )]
+
+[node name="E" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )
+
+[node name="EE" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4 )
+
+[node name="SWW" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -4 )
+
+[node name="SW" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2 )
+
+[node name="S" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0 )
+
+[node name="SE" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2 )
+
+[node name="SEE" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 4 )
+
+[node name="SSW" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2 )
+
+[node name="SS" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0 )
+
+[node name="SSE" parent="PrimaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2 )
+
+[node name="SecondaryWorld" type="Viewport" parent="." groups=["Viewports"]]
+size = Vector2( 1000, 1000 )
+own_world = true
+keep_3d_linear = true
+
+[node name="Camera" type="Camera" parent="SecondaryWorld"]
+environment = ExtResource( 4 )
+
+[node name="WNN" parent="SecondaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -2 )
+
+[node name="ENN" parent="SecondaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2 )
+
+[node name="WNW" parent="SecondaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -4 )
+
+[node name="WN" parent="SecondaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -2 )
+
+[node name="EN" parent="SecondaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 2 )
+
+[node name="ENE" parent="SecondaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4 )
+
+[node name="WSW" parent="SecondaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -4 )
+
+[node name="WS" parent="SecondaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2 )
+
+[node name="ES" parent="SecondaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 2 )
+
+[node name="ESE" parent="SecondaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 4 )
+
+[node name="WSS" parent="SecondaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2 )
+
+[node name="ESS" parent="SecondaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2 )
+
+[node name="TernaryWorld" type="Viewport" parent="." groups=["Viewports"]]
+size = Vector2( 1000, 1000 )
+own_world = true
+keep_3d_linear = true
+
+[node name="Camera" type="Camera" parent="TernaryWorld"]
+environment = ExtResource( 4 )
+
+[node name="NWN" parent="TernaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, -2 )
+
+[node name="NEN" parent="TernaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 2 )
+
+[node name="WWN" parent="TernaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, -4 )
+
+[node name="EEN" parent="TernaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4 )
+
+[node name="WWS" parent="TernaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -4 )
+
+[node name="EES" parent="TernaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 4 )
+
+[node name="SWS" parent="TernaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2 )
+
+[node name="SES" parent="TernaryWorld" instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 2 )
+
+[node name="Portals" type="Spatial" parent="."]
+
+[node name="NE" type="MeshInstance" parent="Portals"]
+transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 1, 1, 2 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 5 )
+
+[node name="Blur" parent="Portals/NE" instance=ExtResource( 5 )]
+
+[node name="NEN" type="MeshInstance" parent="Portals"]
+transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 3, 1, 2 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 7 )
+
+[node name="Blur" parent="Portals/NEN" instance=ExtResource( 5 )]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -1, 0.0462101, 0 )
+
+[node name="EEN" type="MeshInstance" parent="Portals"]
+transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 1, 1, 4 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 7 )
+
+[node name="Blur" parent="Portals/EEN" instance=ExtResource( 5 )]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -1, 0.0462101, 1.19209e-07 )
+
+[node name="SE" type="MeshInstance" parent="Portals"]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -1, 1, 2 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 5 )
+
+[node name="Blur" parent="Portals/SE" instance=ExtResource( 5 )]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 1, 0.046, 1.19209e-07 )
+
+[node name="SES" type="MeshInstance" parent="Portals"]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -3, 1, 2 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 7 )
+
+[node name="Blur" parent="Portals/SES" instance=ExtResource( 5 )]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 1, 0.046, -2.38419e-07 )
+
+[node name="EES" type="MeshInstance" parent="Portals"]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -1, 1, 4 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 7 )
+
+[node name="Blur" parent="Portals/EES" instance=ExtResource( 5 )]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 1, 0.046, 0 )
+
+[node name="NW" type="MeshInstance" parent="Portals"]
+transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 1, 1, -2 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 5 )
+
+[node name="Blur" parent="Portals/NW" instance=ExtResource( 5 )]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 1, 0.046, 5.96046e-08 )
+
+[node name="WWN" type="MeshInstance" parent="Portals"]
+transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 1, 1, -4 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 7 )
+
+[node name="Blur" parent="Portals/WWN" instance=ExtResource( 5 )]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 1, 0.046, 0 )
+
+[node name="NWN" type="MeshInstance" parent="Portals"]
+transform = Transform( -1.62921e-07, 0, -1, 0, 1, 0, 1, 0, -1.62921e-07, 3, 1, -2 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 7 )
+
+[node name="Blur" parent="Portals/NWN" instance=ExtResource( 5 )]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, 1, 0.046, 2.38419e-07 )
+
+[node name="SW" type="MeshInstance" parent="Portals"]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -1, 1, -2 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 5 )
+
+[node name="Blur" parent="Portals/SW" instance=ExtResource( 5 )]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -1, 0.0462101, 2.98023e-07 )
+
+[node name="WWS" type="MeshInstance" parent="Portals"]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -1, 1, -4 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 7 )
+
+[node name="Blur" parent="Portals/WWS" instance=ExtResource( 5 )]
+
+[node name="SWS" type="MeshInstance" parent="Portals"]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -3, 1, -2 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 7 )
+
+[node name="Blur" parent="Portals/SWS" instance=ExtResource( 5 )]
+transform = Transform( -1.62921e-07, 0, 1, 0, 1, 0, -1, 0, -1.62921e-07, -1, 0.0462101, 4.76837e-07 )
+
+[node name="MiniMap" type="ViewportContainer" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -200.0
+margin_top = -200.0
+mouse_filter = 2
+
+[node name="Viewport" type="Viewport" parent="MiniMap"]
+size = Vector2( 200, 200 )
+own_world = true
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="MiniMap" parent="MiniMap/Viewport" instance=ExtResource( 6 )]
+
+[node name="SelectedItem" type="ViewportContainer" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 30.0
+margin_top = -200.0
+margin_right = 200.0
+margin_bottom = -30.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="SelectedItem"]
+size = Vector2( 170, 170 )
+own_world = true
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="Spatial" type="Spatial" parent="SelectedItem/Viewport"]
+
+[node name="Camera" type="Camera" parent="SelectedItem/Viewport/Spatial"]
+transform = Transform( 0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 3, 4, 3 )
+environment = SubResource( 8 )
+fov = 30.0

@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://FakePlayer.gd" type="Script" id=1]
+
+[sub_resource type="SpatialMaterial" id=1]
+
+[sub_resource type="CapsuleMesh" id=2]
+material = SubResource( 1 )
+radius = 0.25
+mid_height = 0.5
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.380392, 0.380392, 0.380392, 1 )
+
+[sub_resource type="CapsuleMesh" id=4]
+radius = 0.1
+mid_height = 0.1
+
+[sub_resource type="SpatialMaterial" id=5]
+
+[sub_resource type="SpatialMaterial" id=6]
+
+[node name="FakePlayer" type="MeshInstance" groups=[
+"FakePlayers",
+]]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0.954227, 0 )
+visible = false
+mesh = SubResource( 2 )
+material/0 = SubResource( 3 )
+script = ExtResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( -0.000866613, 0.999946, 0.0103656, -0.0833079, -0.0104018, 0.996469, 0.996523, 1.5268e-08, 0.0833124, 0.148545, -0.230154, 5.96046e-08 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="."]
+transform = Transform( -0.000866613, 0.999946, 0.0103656, -0.0833079, -0.0104018, 0.996469, 0.996523, 1.5268e-08, 0.0833124, -0.175596, -0.226782, 5.96046e-08 )
+mesh = SubResource( 4 )
+material/0 = SubResource( 6 )
